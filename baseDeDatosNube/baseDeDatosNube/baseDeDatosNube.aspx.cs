@@ -16,7 +16,7 @@ public partial class Proyecto : System.Web.UI.Page
 
         using (MySqlConnection con = new MySqlConnection(ejemplo))
         {
-            using (MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM personas", con))
+            using (MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM facturas", con))
             {
                 DataSet ds = new DataSet();
                 try
