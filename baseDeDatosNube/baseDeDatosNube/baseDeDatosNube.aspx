@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="baseDeDatosNube.aspx.cs" Inherits="Default2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="baseDeDatosNube.aspx.cs" Inherits="Proyecto" %>
 
 <!DOCTYPE html>
 
