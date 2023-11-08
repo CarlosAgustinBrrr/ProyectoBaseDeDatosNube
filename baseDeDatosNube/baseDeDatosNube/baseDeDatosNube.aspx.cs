@@ -8,7 +8,7 @@ using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class Proyecto : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
