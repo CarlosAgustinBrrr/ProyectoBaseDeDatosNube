@@ -10,14 +10,74 @@ using MySql.Data.MySqlClient;
 
 public partial class Proyecto : System.Web.UI.Page
 {
+    DateTime fecha; // Declarar la variable en el ámbito de la clase
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        string ejemplo = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
-
-        using (MySqlConnection con = new MySqlConnection(ejemplo))
+        // Solo cargar datos si no hay una solicitud de filtrado (PostBack)
+        if (!IsPostBack)
         {
-            using (MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM facturas", con))
+            string conexion = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
+
+            using (MySqlConnection con = new MySqlConnection(conexion))
             {
+                using (MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM dataFormatted", con))
+                {
+                    DataSet ds = new DataSet();
+                    try
+                    {
+                        con.Open();
+                        da.Fill(ds);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Manejar errores
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+
+                    TablaDatos.DataSource = ds;
+                    TablaDatos.DataBind();
+                }
+            }
+        }
+    }
+
+    protected void filtrar(object sender, EventArgs e)
+    {
+        string conexion = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
+
+        using (MySqlConnection con = new MySqlConnection(conexion))
+        {
+            // Modificar la consulta SQL con los parámetros del filtro
+            string consulta = "SELECT * FROM dataFormatted " +
+                              "WHERE 1=1";  // Condición siempre verdadera para evitar errores de sintaxis
+
+            using (MySqlDataAdapter da = new MySqlDataAdapter(consulta, con))
+            {
+                // Agregar parámetros al comando solo si se proporciona un valor para fechaDeFacturaFiltro
+                if (!string.IsNullOrEmpty(txtFecha.Text))
+                {
+                    if (DateTime.TryParseExact(txtFecha.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime fecha))
+                    {
+                        string fechaFormateada = fecha.ToString("dd-MM-yyyy");
+
+                        consulta += " AND fechaDeFactura = @FechaDeFactura";
+                        Response.Write("Fecha ingresada: " + txtFecha.Text + "<br>");
+                        Response.Write("Fecha formateada: " + fechaFormateada + "<br>");
+                        Response.Write("Consulta SQL: " + consulta + "<br>");
+                        da.SelectCommand.Parameters.AddWithValue("@FechaDeFactura", fechaFormateada);
+                    }
+                    else
+                    {
+                        // Manejar el caso en que la fecha ingresada no sea válida
+                        Response.Write("Fecha ingresada no válida.<br>");
+                        return;
+                    }
+                }
+
                 DataSet ds = new DataSet();
                 try
                 {
@@ -33,20 +93,8 @@ public partial class Proyecto : System.Web.UI.Page
                     con.Close();
                 }
 
-                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                {
-                    foreach (DataRow row in ds.Tables[0].Rows)
-                    {
-                        // Asumiendo que la columna que contiene la fecha se llama "fecha"
-                        if (row["fechaDeFactura"] != DBNull.Value)
-                        {
-                            row["fechaDeFactura"] = Convert.ToDateTime(row["fechaDeFactura"]).ToString("yyyy-MM-dd");
-                        }
-                    }
-                }
-
-                GridView1.DataSource = ds;
-                GridView1.DataBind();
+                TablaDatos.DataSource = ds;
+                TablaDatos.DataBind();
             }
         }
     }

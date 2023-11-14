@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="baseDeDatosNube.aspx.cs" Inherits="Proyecto" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -10,7 +12,11 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None">
+            <asp:ScriptManager runat="server"></asp:ScriptManager>
+            <asp:TextBox ID="txtFecha" runat="server"></asp:TextBox>
+            <asp:CalendarExtender ID="ceFecha" runat="server" TargetControlID="txtFecha" Format="dd/MM/yyyy"></asp:CalendarExtender>
+            <asp:Button ID="aplicarFiltro" runat="server" Text="Filtrar" OnClick="filtrar"/>
+            <asp:GridView ID="TablaDatos" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None">
                 <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
