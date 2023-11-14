@@ -13,9 +13,19 @@
     <form id="form1" runat="server">
         <div>
             <asp:ScriptManager runat="server"></asp:ScriptManager>
-            <asp:TextBox ID="txtFecha" runat="server"></asp:TextBox>
-            <asp:CalendarExtender ID="ceFecha" runat="server" TargetControlID="txtFecha" Format="dd/MM/yyyy"></asp:CalendarExtender>
-            <asp:Button ID="aplicarFiltro" runat="server" Text="Filtrar" OnClick="filtrar"/>
+            <asp:TextBox ID="FechaFactura" runat="server"></asp:TextBox>
+            <asp:CalendarExtender ID="ceFecha" runat="server" TargetControlID="FechaFactura" Format="dd/MM/yyyy"></asp:CalendarExtender>
+            <asp:TextBox ID="cifCliente" runat="server"></asp:TextBox>
+            <asp:TextBox ID="FechaPago" runat="server"></asp:TextBox>
+            <asp:CalendarExtender ID="CalendarExtender" runat="server" TargetControlID="FechaPago" Format="dd/MM/yyyy"></asp:CalendarExtender>
+            <asp:DropDownList ID="Estado" runat="server" OnSelectedIndexChanged="Estado_SelectedIndexChanged" AutoPostBack="true">
+                <asp:ListItem Text="Todos" Value="-1" />
+                <asp:ListItem Text="Impagada" Value="0" />
+                <asp:ListItem Text="Pendiente" Value="1" />
+                <asp:ListItem Text="Pagada" Value="2" />
+            </asp:DropDownList>
+            <asp:Button ID="aplicarFiltro" runat="server" Text="Filtrar" OnClick="FiltrarDatos"/>
+            <asp:Button ID="borrarFiltro" runat="server" Text="Borrar filtros" OnClick="limpiarFiltro"/>
             <asp:GridView ID="TablaDatos" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None">
                 <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#2461BF" />
