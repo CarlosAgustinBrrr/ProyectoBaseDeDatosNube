@@ -6,26 +6,41 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
+    <title>Base de Datos en la Nube</title>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="formulario" runat="server" class="container">
         <div>
+            <div class="form-row mt-5">
             <asp:ScriptManager runat="server"></asp:ScriptManager>
-            <asp:TextBox ID="FechaFactura" runat="server"></asp:TextBox>
-            <asp:CalendarExtender ID="ceFecha" runat="server" TargetControlID="FechaFactura" Format="dd/MM/yyyy"></asp:CalendarExtender>
-            <asp:TextBox ID="cifCliente" runat="server"></asp:TextBox>
-            <asp:TextBox ID="FechaPago" runat="server"></asp:TextBox>
-            <asp:CalendarExtender ID="CalendarExtender" runat="server" TargetControlID="FechaPago" Format="dd/MM/yyyy"></asp:CalendarExtender>
-            <asp:DropDownList ID="Estado" runat="server" OnSelectedIndexChanged="Estado_SelectedIndexChanged" AutoPostBack="true">
-                <asp:ListItem Text="Todos" Value="-1" />
-                <asp:ListItem Text="Impagada" Value="0" />
-                <asp:ListItem Text="Pendiente" Value="1" />
-                <asp:ListItem Text="Pagada" Value="2" />
-            </asp:DropDownList>
-            <asp:Button ID="aplicarFiltro" runat="server" Text="Filtrar" OnClick="FiltrarDatos"/>
-            <asp:Button ID="borrarFiltro" runat="server" Text="Borrar filtros" OnClick="limpiarFiltro"/>
+            <div class="col-md-3 mb-2">
+                <asp:TextBox ID="FechaFactura" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:CalendarExtender ID="ceFecha" runat="server" TargetControlID="FechaFactura" Format="dd/MM/yyyy"></asp:CalendarExtender>
+            </div>
+            <div class="col-md-3 mb-2">
+                <asp:TextBox ID="cifCliente" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="col-md-3 mb-2">
+                <asp:TextBox ID="FechaPago" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:CalendarExtender ID="CalendarExtender" runat="server" TargetControlID="FechaPago" Format="dd/MM/yyyy"></asp:CalendarExtender>
+            </div>
+            <div class="col-md-3 mb-2">
+                <asp:DropDownList ID="Estado" runat="server" OnSelectedIndexChanged="Estado_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control">
+                    <asp:ListItem Text="Todos" Value="-1" />
+                    <asp:ListItem Text="Impagada" Value="0" />
+                    <asp:ListItem Text="Pendiente" Value="1" />
+                    <asp:ListItem Text="Pagada" Value="2" />
+                </asp:DropDownList>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12">
+                <asp:Button ID="Button1" runat="server" Text="Filtrar" OnClick="FiltrarDatos" CssClass="btn btn-primary mb-2" />
+                <asp:Button ID="Button2" runat="server" Text="Borrar filtros" OnClick="limpiarFiltro" CssClass="btn btn-danger mb-2" />
+            </div>
+        </div>
             <asp:GridView ID="TablaDatos" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None">
                 <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#2461BF" />
