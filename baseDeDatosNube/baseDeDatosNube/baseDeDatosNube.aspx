@@ -16,17 +16,17 @@
             <div class="form-row mt-5">
             <asp:ScriptManager runat="server"></asp:ScriptManager>
             <div class="col-md-3 mb-2">
-                <asp:TextBox ID="FechaFactura" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="FechaFactura" runat="server" placeholder="Fecha de la factura" CssClass="form-control"></asp:TextBox>
                 <asp:CalendarExtender ID="ceFecha" runat="server" TargetControlID="FechaFactura" Format="dd/MM/yyyy"></asp:CalendarExtender>
             </div>
             <div class="col-md-3 mb-2">
-                <asp:TextBox ID="cifCliente" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="cifCliente" runat="server" placeholder="Cliente" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="col-md-3 mb-2">
-                <asp:TextBox ID="FechaPago" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="FechaPago" runat="server" placeholder="Fecha de cobro" CssClass="form-control"></asp:TextBox>
                 <asp:CalendarExtender ID="CalendarExtender" runat="server" TargetControlID="FechaPago" Format="dd/MM/yyyy"></asp:CalendarExtender>
             </div>
-            <div class="col-md-3 mb-2">
+            <div class="col-md-2 mb-2">
                 <asp:DropDownList ID="Estado" runat="server" OnSelectedIndexChanged="Estado_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control">
                     <asp:ListItem Text="Todos" Value="-1" />
                     <asp:ListItem Text="Impagada" Value="0" />
@@ -41,7 +41,7 @@
                 <asp:Button ID="Button2" runat="server" Text="Borrar filtros" OnClick="limpiarFiltro" CssClass="btn btn-danger mb-2" />
             </div>
         </div>
-            <asp:GridView ID="TablaDatos" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None">
+            <asp:GridView ID="TablaDatos" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" CssClass="text-center">
                 <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />

@@ -20,7 +20,18 @@ public partial class Proyecto : System.Web.UI.Page
 
             using (MySqlConnection con = new MySqlConnection(conexion))
             {
-                using (MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM dataFormatted", con))
+                string consulta = "SELECT " + 
+                            " numFactura as ID, " + 
+                            "date_format(fechaDeFactura, '%d-%m-%Y') as 'Fecha de factura', " +
+                            "cifCliente as Cliente, " +
+                            "nombreApellidos as 'Nombre y Apellidos', " +
+                            "importe as Importe, " +
+                            "importeIVA as 'Importe con IVA', " +
+                            "moneda as Moneda, " +
+                            "COALESCE(date_format(fechacobro, '%d-%m-%Y'), 'N/A') as 'Fecha de cobro', " +
+                            "COALESCE(estado, 'N/A') as 'Estado de la factura' " +
+                            "FROM facturas";
+                using (MySqlDataAdapter da = new MySqlDataAdapter(consulta, con))
                 {
                     DataSet ds = new DataSet();
                     try
@@ -51,16 +62,25 @@ public partial class Proyecto : System.Web.UI.Page
         using (MySqlConnection con = new MySqlConnection(conexion))
         {
             // Modificar la consulta SQL con los parámetros del filtro
-            string consulta = "SELECT * FROM dataFormatted " +
-                              "WHERE 1=1";  // Condición siempre verdadera para evitar errores de sintaxis
+            string consulta = "SELECT " +
+                            " numFactura as ID, " +
+                            "date_format(fechaDeFactura, '%d-%m-%Y') as 'Fecha de factura', " +
+                            "cifCliente as Cliente, " +
+                            "nombreApellidos as 'Nombre y Apellidos', " +
+                            "importe as Importe, " +
+                            "importeIVA as 'Importe con IVA', " +
+                            "moneda as Moneda, " +
+                            "COALESCE(date_format(fechacobro, '%d-%m-%Y'), 'N/A') as 'Fecha de cobro', " +
+                            "COALESCE(estado, 'N/A') as 'Estado de la factura' " +
+                            "FROM facturas WHERE 1=1";  // Condición siempre verdadera para evitar errores de sintaxis
 
             if (!string.IsNullOrEmpty(FechaFactura.Text))
             {
                 try
                 {
                     DateTime fechaFactura = DateTime.Parse((string)FechaFactura.Text);
-                    string fechaFormateada = fechaFactura.ToString("dd-MM-yyyy");
-                    consulta += " AND fechaDeFactura = '" + fechaFormateada + "'";
+                    string fechaFormateada = fechaFactura.ToString("yyyy-MM-dd");
+                    consulta += " AND fechaDeFactura = '" + fechaFormateada + "'" ;
                 }
                 catch (FormatException ex)
                 {
@@ -79,7 +99,7 @@ public partial class Proyecto : System.Web.UI.Page
                 try
                 {
                     DateTime fechaFactura = DateTime.Parse((string)FechaPago.Text);
-                    string fechaFormateada = fechaFactura.ToString("dd-MM-yyyy");
+                    string fechaFormateada = fechaFactura.ToString("yyyy-MM-dd");
                     consulta += " AND fechaDeFactura = '" + fechaFormateada + "'";
                 }
                 catch (FormatException ex)
@@ -139,13 +159,13 @@ public partial class Proyecto : System.Web.UI.Page
                 case -1:
                     break;
                 case 0:
-                    condicionEstado = " AND estado = 'impagada'";
+                    condicionEstado = " AND estado = 'Impagada'";
                     break;
                 case 1:
-                    condicionEstado = " AND estado = 'pendiente'";
+                    condicionEstado = " AND estado = 'Pendiente'";
                     break;
                 case 2:
-                    condicionEstado = " AND estado = 'pagada'";
+                    condicionEstado = " AND estado = 'Pagada'";
                     break;
                 default:
 
@@ -167,7 +187,18 @@ public partial class Proyecto : System.Web.UI.Page
 
         using (MySqlConnection con = new MySqlConnection(conexion))
         {
-            using (MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM dataFormatted", con))
+            string consulta = "SELECT " +
+                            " numFactura as ID, " +
+                            "date_format(fechaDeFactura, '%d-%m-%Y') as 'Fecha de factura', " +
+                            "cifCliente as Cliente, " +
+                            "nombreApellidos as 'Nombre y Apellidos', " +
+                            "importe as Importe, " +
+                            "importeIVA as 'Importe con IVA', " +
+                            "moneda as Moneda, " +
+                            "COALESCE(date_format(fechacobro, '%d-%m-%Y'), 'N/A') as 'Fecha de cobro', " +
+                            "COALESCE(estado, 'N/A') as 'Estado de la factura' " +
+                            "FROM facturas";
+            using (MySqlDataAdapter da = new MySqlDataAdapter(consulta, con))
             {
                 DataSet ds = new DataSet();
                 try
