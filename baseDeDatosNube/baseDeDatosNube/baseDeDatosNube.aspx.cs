@@ -22,7 +22,7 @@ public partial class Proyecto : System.Web.UI.Page
                 try
                 {
                     con.Open();
-                    da.Fill(ds, "personas");
+                    da.Fill(ds);
                 }
                 catch (Exception ex)
                 {
@@ -33,7 +33,7 @@ public partial class Proyecto : System.Web.UI.Page
                     con.Close();
                 }
 
-                GridView1.DataSource = ds.Tables["personas"];
+                GridView1.DataSource = ds;
                 GridView1.DataBind();
             }
         }
