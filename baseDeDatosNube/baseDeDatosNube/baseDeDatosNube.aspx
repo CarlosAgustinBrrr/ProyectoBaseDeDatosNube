@@ -30,8 +30,7 @@
                 <asp:DropDownList ID="Estado" runat="server" OnSelectedIndexChanged="Estado_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control">
                     <asp:ListItem Text="Todos" Value="-1" />
                     <asp:ListItem Text="Impagada" Value="0" />
-                    <asp:ListItem Text="Pendiente" Value="1" />
-                    <asp:ListItem Text="Pagada" Value="2" />
+                    <asp:ListItem Text="Pagada" Value="1" />
                 </asp:DropDownList>
             </div>
         </div>

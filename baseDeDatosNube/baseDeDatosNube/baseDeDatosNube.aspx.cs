@@ -121,7 +121,6 @@ public partial class Proyecto : System.Web.UI.Page
 
                 DataSet ds = new DataSet();
 
-                Response.Write("Consulta SQL: " + consulta + "<br>");
                 try
                 {
                     con.Open();
@@ -162,9 +161,6 @@ public partial class Proyecto : System.Web.UI.Page
                     condicionEstado = " AND estado = 'Impagada'";
                     break;
                 case 1:
-                    condicionEstado = " AND estado = 'Pendiente'";
-                    break;
-                case 2:
                     condicionEstado = " AND estado = 'Pagada'";
                     break;
                 default:
