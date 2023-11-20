@@ -13,7 +13,8 @@
 <body>
     <form id="formulario" runat="server" class="container">
         <div>
-            <div class="form-row mt-5">
+            <h3>Filtrar facturas</h3>
+            <div class="form-row mt-1">
             <asp:ScriptManager runat="server"></asp:ScriptManager>
             <div class="col-md-3 mb-2">
                 <asp:TextBox ID="FechaFactura" runat="server" placeholder="Fecha de la factura" CssClass="form-control"></asp:TextBox>
@@ -38,6 +39,86 @@
             <div class="col-md-12">
                 <asp:Button ID="Button1" runat="server" Text="Filtrar" OnClick="FiltrarDatos" CssClass="btn btn-primary mb-2" />
                 <asp:Button ID="Button2" runat="server" Text="Borrar filtros" OnClick="limpiarFiltro" CssClass="btn btn-danger mb-2" />
+            </div>
+            <div>
+                <h3>Actualizar estado de factura</h3>
+                <asp:TextBox ID="idFactura" runat="server" placeholder="Id de la factura" CssClass="form-control"></asp:TextBox>
+                <asp:Button ID="Button3" runat="server" Text="Actualizar estado" OnClick="modificarEstado" CssClass="btn btn-primary mt-2 mb-2" />
+            </div>
+        </div>
+        <div>
+        <h3>Añadir Nueva Factura</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtNumFactura">Número de Factura:</label>
+                    <asp:TextBox ID="txtNumFactura" runat="server" CssClass="form-control" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtFechaDeFactura">Fecha de Factura:</label>
+                    <asp:TextBox ID="txtFechaDeFactura" runat="server"  CssClass="form-control"></asp:TextBox>
+                    <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="txtFechaDeFactura" Format="dd/MM/yyyy"></asp:CalendarExtender>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtCifCliente">CIF Cliente:</label>
+                    <asp:TextBox ID="txtCifCliente" runat="server" CssClass="form-control" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtNombreApellidos">Nombre y Apellidos:</label>
+                    <asp:TextBox ID="txtNombreApellidos" runat="server" CssClass="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtImporte">Importe:</label>
+                    <asp:TextBox ID="txtImporte" runat="server" CssClass="form-control" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtImporteIVA">Importe con IVA:</label>
+                    <asp:TextBox ID="txtImporteIVA" runat="server" CssClass="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtMoneda">Moneda:</label>
+                    <asp:TextBox ID="txtMoneda" runat="server" CssClass="form-control" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ddlEstado">Estado:</label>
+                    <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-control">
+                        <asp:ListItem Text="Impagada" Value="Impagada" />
+                    </asp:DropDownList>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <asp:Button ID="btnAñadirFactura" runat="server" Text="Añadir Factura" OnClick="AñadirFactura_Click" CssClass="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" />
+                </div>
             </div>
         </div>
             <asp:GridView ID="TablaDatos" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" CssClass="text-center">
