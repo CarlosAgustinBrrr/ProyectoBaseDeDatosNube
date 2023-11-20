@@ -15,6 +15,7 @@ public partial class Proyecto : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         // Solo cargar datos si no hay una solicitud de filtrado (PostBack)
+        // Realiza una consulta a la base de datos y muestra los datos con su formato correspondiente
         if (!IsPostBack)
         {
             string conexion = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
@@ -56,6 +57,7 @@ public partial class Proyecto : System.Web.UI.Page
         }
     }
 
+    //Metodo que filtra los datos que se encuentran en la base de datos y muestra el resultado
     protected void FiltrarDatos(object sender, EventArgs e)
     {
         string conexion = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
@@ -75,7 +77,8 @@ public partial class Proyecto : System.Web.UI.Page
                             "COALESCE(estado, 'N/A') as 'Estado de la factura' " +
                             "FROM facturas WHERE 1=1";  // Condición siempre verdadera para evitar errores de sintaxis
 
-            if (!string.IsNullOrEmpty(FechaFactura.Text))
+            if (!string.IsNullOrEmpty(FechaFactura.Text)) // Comprueba que fecha no sea null para incorporarlo a la consulta,
+                                                          // en caso de que fecha sea null, no lo incorpora
             {
                 try
                 {
@@ -90,12 +93,12 @@ public partial class Proyecto : System.Web.UI.Page
                 }
             }
 
-            if (!string.IsNullOrEmpty(cifCliente.Text))
+            if (!string.IsNullOrEmpty(cifCliente.Text)) // Misma condicion que fecha pero con cifCliente
             {
                 consulta += " AND cifCliente = '" + cifCliente.Text + "'";
             }
 
-            if (!string.IsNullOrEmpty(FechaPago.Text))
+            if (!string.IsNullOrEmpty(FechaPago.Text)) // // Misma condicion que fecha pero con FechaPago
             {
                 try
                 {
@@ -141,15 +144,16 @@ public partial class Proyecto : System.Web.UI.Page
         }
     }
 
+    // Este método se ejecuta cuando cambia la selección en el control DropDownList llamado 'Estado'.
     protected void Estado_SelectedIndexChanged(object sender, EventArgs e)
     {
         
     }
 
+    // Metodo procesa el estado seleccionado y devuelve una condición asociada.
     protected string procesarEstado(string estadoSeleccionado)
     {
         string condicionEstado = "";
-        // Convierte el valor seleccionado a un tipo específico, por ejemplo, int
         if (int.TryParse(estadoSeleccionado, out int estado))
         {
 
@@ -177,6 +181,7 @@ public partial class Proyecto : System.Web.UI.Page
         return condicionEstado;
     }
 
+    // Metodo que limpia el filtro y actualiza la pagina para ver la base de datos sin filtrar
     protected void limpiarFiltro(object sender, EventArgs e)
     {
         FechaFactura.Text = "";
@@ -184,14 +189,15 @@ public partial class Proyecto : System.Web.UI.Page
         FechaPago.Text = "";
         Estado.SelectedValue = "-1";
 
-        Response.Redirect(Request.RawUrl);
+        Response.Redirect(Request.RawUrl); // Actualiza la página
     }
 
-
+    // Metodo que modifica el estado de una factura, comprueba si esta esta como "Pagada" o "Impagada" y en caso de estar "Impagada"
+    // la establece como "Pagada" y pone como fechaCobro la fecha actual del dispositivo
     protected void modificarEstado(object sender, EventArgs e)
     {
         string conexion = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
-        string numFactura = idFactura.Text;  // Asumiendo que idFactura.Text es una cadena.
+        string numFactura = idFactura.Text;  // Id de factura que deseamos actualizar
 
         using (MySqlConnection con = new MySqlConnection(conexion))
         {
@@ -263,7 +269,8 @@ public partial class Proyecto : System.Web.UI.Page
         }
     }
 
-    protected void AñadirFactura_Click(object sender, EventArgs e)
+    // Metodo para añadir una nueva factura
+    protected void AnadirFactura_Click(object sender, EventArgs e)
     {
         try
         {
@@ -276,11 +283,12 @@ public partial class Proyecto : System.Web.UI.Page
             decimal importe = decimal.Parse(txtImporte.Text);
             decimal importeIVA = decimal.Parse(txtImporteIVA.Text);
             string moneda = txtMoneda.Text;
-            string estado = ddlEstado.SelectedValue; // Asumiendo que es un DropDownList
+            string estado = ddlEstado.SelectedValue; // Establecemos en un DropList el estado "Impagado" siempre, para mas tarde actualizarlo
 
             if (string.IsNullOrEmpty(numFactura) || string.IsNullOrEmpty(cifCliente) || string.IsNullOrEmpty(nombreApellidos))
             {
-                Response.Write("Por favor, completa todos los campos obligatorios.");
+                Response.Write("Por favor, completa todos los campos obligatorios."); // En caso de no introducir los campos obligatorios
+                                                                                      // salta error
                 return;
             }
 
@@ -288,7 +296,8 @@ public partial class Proyecto : System.Web.UI.Page
             {
                 con.Open();
 
-                string checkQuery = "SELECT EXISTS(SELECT 1 FROM facturas WHERE numFactura = @NumFactura)";
+                string checkQuery = "SELECT EXISTS(SELECT 1 FROM facturas WHERE numFactura = @NumFactura)"; // Consulta para comprobar si ya 
+                                                                                                            // existe un registro con ese id
                 using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, con))
                 {
                     checkCmd.Parameters.AddWithValue("@NumFactura", numFactura);
@@ -321,6 +330,7 @@ public partial class Proyecto : System.Web.UI.Page
                     if (filasAfectadas > 0)
                     {
                         Response.Write("Factura añadida correctamente.");
+                        Response.Redirect(Request.RawUrl); // Actualiza la página
                     }
                     else
                     {

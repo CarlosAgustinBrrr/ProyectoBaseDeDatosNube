@@ -110,7 +110,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <asp:Button ID="btnAñadirFactura" runat="server" Text="Añadir Factura" OnClick="AñadirFactura_Click" CssClass="btn btn-primary" />
+                    <asp:Button ID="btnAñadirFactura" runat="server" Text="Añadir Factura" OnClick="AnadirFactura_Click" CssClass="btn btn-primary" />
                 </div>
             </div>
         </div>
