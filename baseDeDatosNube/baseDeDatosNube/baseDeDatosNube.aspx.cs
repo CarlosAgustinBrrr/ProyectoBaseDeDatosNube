@@ -104,7 +104,7 @@ public partial class Proyecto : System.Web.UI.Page
                 {
                     DateTime fechaFactura = DateTime.Parse((string)FechaPago.Text);
                     string fechaFormateada = fechaFactura.ToString("yyyy-MM-dd");
-                    consulta += " AND fechaDeFactura = '" + fechaFormateada + "'";
+                    consulta += " AND fechaCobro = '" + fechaFormateada + "'";
                 }
                 catch (FormatException ex)
                 {
